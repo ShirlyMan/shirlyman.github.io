@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>Compact Time Greetings</title>
+    <title>Time and Date Display</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Roboto:wght@300;400&display=swap');
@@ -13,13 +13,13 @@
             padding: 5px;
         }
         
-        .greeting-card {
+        .time-card {
             padding: 10px 15px;
             text-align: center;
             max-width: 280px;
         }
         
-        .greeting-card h1 {
+        .time-card h1 {
             margin: 0 0 5px;
             font-family: 'Dancing Script', cursive;
             font-size: 1.8rem;
@@ -28,62 +28,52 @@
             line-height: 1;
         }
         
-        .greeting-card p {
+        .time-card p {
             margin: 5px 0;
             font-size: 0.9rem;
             color: #333;
         }
         
-        #date {
+        #time {
             font-weight: 400;
         }
         
-        #time {
+        #date {
             font-weight: 400;
         }
     </style>
 </head>
 <body>
-    <div class="greeting-card">
-        <h1 id="greeting">Hello!</h1>
-        <p id="date">Today is ...</p>
-        <p id="time">Time is ...</p>
+    <div class="time-card">
+        <h1 id="time">--:-- --</h1>
+        <p id="date">Day, Month DD, YYYY</p>
     </div>
     
     <script>
-        function updateGreeting() {
-            const greetingEl = document.getElementById('greeting');
-            const dateEl = document.getElementById('date');
+        function updateDisplay() {
             const timeEl = document.getElementById('time');
+            const dateEl = document.getElementById('date');
             
             const now = new Date();
-            const hour = now.getHours();
             
-            let greeting = 'Hello';
-            if (hour < 12) greeting = 'Good Morning';
-            else if (hour < 18) greeting = 'Good Afternoon';
-            else greeting = 'Good Evening';
-            
-            const dateOptions = { 
-                weekday: 'short', 
-                year: 'numeric', 
-                month: 'short', 
-                day: 'numeric' 
-            };
-            
-            const timeOptions = { 
+            // Time format (e.g., "03:45 PM")
+            timeEl.textContent = now.toLocaleTimeString('en-US', { 
                 hour: '2-digit', 
                 minute: '2-digit',
                 hour12: true 
-            };
+            });
             
-            greetingEl.textContent = greeting;
-            dateEl.textContent = now.toLocaleDateString(undefined, dateOptions);
-            timeEl.textContent = now.toLocaleTimeString(undefined, timeOptions);
+            // Date format (e.g., "Monday, January 01, 2024")
+            dateEl.textContent = now.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
         }
         
-        updateGreeting();
-        setInterval(updateGreeting, 1000);
+        updateDisplay();
+        setInterval(updateDisplay, 1000);
     </script>
 </body>
 </html>
